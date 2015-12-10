@@ -1,5 +1,7 @@
-# filebeat-formula
+# filebeat formula
 Install and configure filebeat.
+
+See the full [Salt Formulas installation and usage instructions](http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html).
 
 ## Available states
 
@@ -21,7 +23,7 @@ See pillar.example for example configuration.
 
 ### Overriding defaults
 
-This formula puts some system specific configuration in map.jinja. the may be overridden in your pillar data like so:
+This formula puts some system specific configuration in _map.jinja_. the may be overridden in your pillar data like so:
 ```
 filebeat:
   lookup:
@@ -32,4 +34,4 @@ filebeat:
 
 Starts the filebeat service. 
 
-* Due to filebeat requiring tty to start, this state uses a SSH loopback to achieve this. (use_vt / sudoers !requiretty did not resolve this on 2015.8.x...) *
+*Due to filebeat requiring tty to start, this state uses a SSH loopback to achieve this. (use_vt / sudoers !requiretty did not resolve this on 2015.8.x...)*

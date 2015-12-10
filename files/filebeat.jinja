@@ -1,0 +1,46 @@
+{%- set filebeat = salt['pillar.get']('filebeat', {}) %}
+filebeat:
+  prospectors:
+    -
+      paths:
+{%- set log_paths = filebeat.get('log_paths', ['/var/log/auth.log', '/var/log/syslog']) %}
+{%- for log_path in log_paths %}
+{%- for path in log_path.paths %}
+        - {{ path }}
+{%- endfor %}
+      input_type: {{ log_path.get('input_type', 'log') }}
+      document_type: {{ log_path.get('document_type', 'syslog') }}
+      ignore_older: {{ log_path.get('ignore_older', '24h') }}
+{%- endfor %}
+
+  registry_file: /var/lib/filebeat/registry
+
+output:
+{%- set elasticsearch = filebeat.get('elasticsearch', {}) %}
+{%- set logstash = filebeat.get('logstash', {}) %}
+
+{%- if filebeat.elasticsearch.get('enabled', False) %}
+  elasticsearch:
+    hosts: ["http://{{ filebeat.elasticsearch.server }}"]
+{%- endif %}
+
+{%- if filebeat.logstash.get('enabled', False) %}
+  logstash:
+    hosts: ["{{ filebeat.logstash.server }}"]
+    worker: 1
+    loadbalance: true
+    index: filebeat
+
+{%- if 'tls' in filebeat.logstash %}
+{%- if filebeat.logstash.tls.get('enabled', False) %}
+    tls:
+      certificate_authorities: ["{{ filebeat.logstash.tls.ssl_cert_path }}"]
+{%- endif %}
+{%- endif %}
+{%- endif %}
+
+shipper:
+
+logging:
+  files:
+    rotateeverybytes: 10485760 # = 10MB
