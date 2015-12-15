@@ -11,6 +11,20 @@ filebeat:
       input_type: {{ log_path.get('input_type', 'log') }}
       document_type: {{ log_path.get('document_type', 'syslog') }}
       ignore_older: {{ log_path.get('ignore_older', '24h') }}
+      scan_frequency: {{ log_path.get('scan_frequency', '10s') }}
+      backoff: {{ log_path.get('backoff', '1s') }}
+      max_backoff: {{ log_path.get('max_backoff', '10s') }}
+      backoff_factor: {{ log_path.get('backoff_facter', '2') }}
+      force_close_files: {{ log_path.get('force_close_files', 'false') }}
+      fields_under_root: {{ log_path.get('fields_under_root', 'false') }}
+{%- if 'fields' in log_path %}
+      fields:
+{%- for field in log_path.fields %}
+{%- for key, value in field.items() %}
+        {{ key }}: {{ value }}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
 {%- endfor %}
 
   registry_file: /var/lib/filebeat/registry

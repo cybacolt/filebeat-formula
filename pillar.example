@@ -15,6 +15,10 @@ filebeat:
       input_type: 'log'
       document_type: 'syslog'
       ignore_older: '24h'
+      fields_under_root: 'true'
+      fields:
+        - env: my_environment
+        - server_role: webserver
 
   
   elasticsearch:
