@@ -15,7 +15,7 @@ filebeat.pubkeytoauth:
 
 filebeat.service:
   cmd.run:
-    - name: ssh -t -t -i /root/.ssh/filebeat root@localhost "su -c 'service filebeat start'"
+    - name: ssh -t -t -o NoHostAuthenticationForLocalhost=yes -i /root/.ssh/filebeat root@localhost "su -c 'service filebeat start'"
     - unless: 
       - service filebeat status
     - require:
