@@ -1,10 +1,10 @@
 {%- set filebeat = salt['pillar.get']('filebeat', {}) %}
 filebeat:
   prospectors:
-    -
-      paths:
 {%- set log_paths = filebeat.get('log_paths', ['/var/log/auth.log', '/var/log/syslog']) %}
 {%- for log_path in log_paths %}
+    -
+      paths:
 {%- for path in log_path.paths %}
         - {{ path }}
 {%- endfor %}
