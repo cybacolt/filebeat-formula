@@ -2,6 +2,7 @@ filebeat:
   lookup:
     config_path: /etc/mycustom/filebeat/filebeat.yml
     config_source: salt://mycustom/filebeat/filebeat.jinja
+    runlevels_install: True
 
   # if no log_paths specified, generic syslogs are default
   log_paths:
