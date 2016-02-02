@@ -24,6 +24,8 @@ filebeat.config:
     - watch_in:
       - service: filebeat.service
 
+{% if conf.runlevels_install %}
 filebeat.runlevels_install:
   cmd.run:
     - name: update-rc.d filebeat defaults 95 10
+{% endif %}
