@@ -14,7 +14,7 @@ filebeat:
       scan_frequency: {{ log_path.get('scan_frequency', '10s') }}
       backoff: {{ log_path.get('backoff', '1s') }}
       max_backoff: {{ log_path.get('max_backoff', '10s') }}
-      backoff_factor: {{ log_path.get('backoff_facter', '2') }}
+      backoff_factor: {{ log_path.get('backoff_factor', '2') }}
       force_close_files: {{ log_path.get('force_close_files', 'false') }}
       fields_under_root: {{ log_path.get('fields_under_root', 'false') }}
 {%- if 'fields' in log_path %}
