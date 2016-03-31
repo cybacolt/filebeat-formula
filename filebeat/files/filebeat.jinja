@@ -17,6 +17,19 @@ filebeat:
       backoff_factor: {{ log_path.get('backoff_factor', '2') }}
       force_close_files: {{ log_path.get('force_close_files', 'false') }}
       fields_under_root: {{ log_path.get('fields_under_root', 'false') }}
+      close_older: {{ log_path.get('close_older', '1h') }}
+{%- if 'multiline' in log_path %}
+      multiline:
+        pattern: "{{ log_path.multiline.get('pattern', '') }}"
+        negate: {{ log_path.multiline.get('negate', 'false') }}
+        match: {{ log_path.multiline.get('match', 'after') }}
+{%- if 'include_lines' in log_path %}
+      include_lines: ["{{ log_path.include_lines|join('", "') }}"]
+{%- endif %}
+{%- if 'exclude_lines' in log_path %}
+      exclude_lines: ["{{ log_path.exclude_lines|join('", "') }}"]
+{%- endif %}
+{%- endif %}
 {%- if 'fields' in log_path %}
       fields:
 {%- for field in log_path.fields %}

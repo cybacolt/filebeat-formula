@@ -16,6 +16,16 @@ filebeat:
       input_type: 'log'
       document_type: 'syslog'
       ignore_older: '24h'
+      close_older: '2h'
+      multiline:
+        pattern: ^[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}
+        negate: 'true'
+        match: 'after'
+      include_lines:
+        - '^[[:digit:]]{4}-'
+      exclude_lines:
+        - '^DBG'
+        - '^WARN'
       fields_under_root: 'true'
       fields:
         - env: my_environment

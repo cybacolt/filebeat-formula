@@ -21,6 +21,10 @@ configures filebeat, and installs rc levels for startup on reboot.
 
 See pillar.example for example configuration.
 
+Please be aware not all config items will work with all versions of Filebeat:
+* close_older >= 1.1.0
+* multiline, include_lines, exclude_lines >= 1.2.0
+
 ### Overriding defaults
 
 This formula puts some system specific configuration in _map.jinja_. the may be overridden in your pillar data like so:
