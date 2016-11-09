@@ -9,7 +9,7 @@ filebeat_repo:
       - pkg: filebeat.install
     - watch_in:
       - pkg: filebeat.install
-      
+
 {% elif salt['grains.get']('os_family') == 'RedHat' %}
 filebeat_repo:
   pkgrepo.managed:

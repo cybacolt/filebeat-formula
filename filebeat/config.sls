@@ -22,8 +22,7 @@ filebeat.config:
     - group: root
     - mode: 644
     - watch_in:
-# unfortunately, filebeat is restarted by cmd until tty issues are resolved
-      - cmd: filebeat.service
+      - service: filebeat.service
 
 {% if conf.runlevels_install %}
 filebeat.runlevels_install:
