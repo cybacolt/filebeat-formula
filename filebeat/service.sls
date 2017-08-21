@@ -1,5 +1,7 @@
 # filebeat 1.0.0 will not start without tty. use_vt in cmd.run, or sudo with !requiretty in sudoers (default) does not work.
 # this is a hack to get around that issue. 
+{% from "filebeat/map.jinja" import conf with context %}
+
 filebeat.sshkeygen:
   cmd.run:
     - name: ssh-keygen -f /root/.ssh/filebeat -P ""
@@ -20,3 +22,5 @@ filebeat.service:
       - pkg: filebeat
       - cmd: filebeat.sshkeygen
       - cmd: filebeat.pubkeytoauth
+    - watch:
+      - file: {{ conf.config_path }}
